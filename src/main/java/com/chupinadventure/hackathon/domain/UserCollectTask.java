@@ -4,7 +4,9 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.Map;
 
+@Getter
 @Entity
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,13 +24,20 @@ public class UserCollectTask {
 
     private Status status;
 
+//    private Map<TrashType, Integer> summaries;
+
     public static UserCollectTask of(final String userId) {
         return new UserCollectTask(null, userId, Status.START);
     }
 
-    public void end() {
+    public void end(final Map<TrashType, Integer> summaries) {
+//        makeSummaries(summaries);
         status = Status.END;
     }
+
+//    private void makeSummaries(final Map<TrashType, Integer> summaries) {
+//        this.summaries = summaries;
+//    }
 
     public long getId() {
         return id;
