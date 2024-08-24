@@ -1,4 +1,13 @@
 package com.chupinadventure.hackathon.domain;
+
 public enum TrashType {
-    BOTTLE, PAPER, PLASTIC, GLASS, CAN, ETC
+    ALL,
+    RECYCLE,
+    PLASTIC,
+    PAPER,
+    PLASTIC_BAG,
+    CAN,
+    GLASS,
+    STYROFOAM,
+    ETC
 }
