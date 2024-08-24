@@ -25,6 +25,7 @@ public class UserCollectTask {
     @Column(nullable = false)
     private Status status;
 
+//    @Column(name = "db_filed", columnDefinition = "json")
 //    private Map<TrashType, Integer> summaries;
 
     public static UserCollectTask of(final String userId) {
