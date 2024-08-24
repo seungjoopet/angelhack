@@ -3,6 +3,7 @@ package com.chupinadventure.hackathon.domain;
 import com.chupinadventure.hackathon.service.TrashCreateCommand;
 import com.chupinadventure.hackathon.utils.GeoUtils;
 import lombok.*;
+import org.hibernate.annotations.Where;
 import org.locationtech.jts.geom.Point;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @ToString
 @EqualsAndHashCode(of = "id")
 @EntityListeners(AuditingEntityListener.class)
+@Where(clause = "isDeleted = false")
 public class Trash {
 
     @Id
@@ -42,9 +44,16 @@ public class Trash {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
+    @Column(nullable = false)
+    private boolean isDeleted;
+
     public static Trash of(final String userId, final TrashCreateCommand command) {
         final Point point = GeoUtils.create(command.getLongitude(), command.getLatitude());
 
-        return new Trash(null, command.getType(), point, userId, null, null);
+        return new Trash(null, command.getType(), point, userId, null, null, false);
+    }
+
+    public void delete() {
+        isDeleted = true;
     }
 }

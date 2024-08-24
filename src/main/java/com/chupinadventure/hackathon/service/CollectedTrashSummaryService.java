@@ -1,33 +1,26 @@
 package com.chupinadventure.hackathon.service;
 
-import com.chupinadventure.hackathon.domain.Trash;
-import com.chupinadventure.hackathon.domain.TrashRepository;
-import com.chupinadventure.hackathon.domain.UserLocation;
-import com.chupinadventure.hackathon.domain.UserLocationRepository;
-import com.chupinadventure.hackathon.global.PointAndRadius;
-import com.google.common.collect.ImmutableSet;
+import com.chupinadventure.hackathon.domain.UserCollectTask;
+import com.chupinadventure.hackathon.domain.UserCollectTaskRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
 public class CollectedTrashSummaryService {
 
-    private final TrashRepository trashRepository;
-    private final UserLocationRepository userLocationRepository;
+    private final UserCollectTaskRepository userCollectTaskRepository;
 
-    public Set<Trash> summary(final long collectId) {
-        final Set<UserLocation> userLocations = userLocationRepository.findAllByCollectId(collectId);
+    public UserCollectSummary summary(final long collectId) {
+        final UserCollectTask collectTask = userCollectTaskRepository.findById(collectId)
+                .orElseThrow(() -> new RuntimeException("not exist collectTask"));
 
-        final Set<Long> trashIds = userLocations.stream()
-                .map(userLocation -> new PointAndRadius(userLocation.getLocation().getX(), userLocation.getLocation().getY(), 50))
-                .map(pointAndRadius -> trashRepository.findDistanceSphere(pointAndRadius.getLongitude(), pointAndRadius.getLatitude(), pointAndRadius.getRadiusMeter()))
-                .flatMap(Collection::stream)
-                .collect(ImmutableSet.toImmutableSet());
+//        return new UserCollectSummary(collectTask.getSummaries()
+//                .entrySet()
+//                .stream()
+//                .map(entry -> new UserCollectSummary.CollectedTrashCount(entry.getKey(), entry.getValue()))
+//                .collect(ImmutableSet.toImmutableSet()));
 
-        return ImmutableSet.copyOf(trashRepository.findAllById(trashIds));
+        return null;
     }
 }
