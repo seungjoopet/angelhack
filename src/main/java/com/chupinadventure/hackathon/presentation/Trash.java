@@ -5,11 +5,11 @@ import lombok.Getter;
 
 @Getter
 public final class Trash {
-    private final TrashType trashType;
+    private final TrashType type;
     private final Location location;
 
-    public Trash(final TrashType trashType, final Location location) {
-        this.trashType = trashType;
+    public Trash(final TrashType type, final Location location) {
+        this.type = type;
         this.location = location;
     }
 }

@@ -2,12 +2,14 @@ package com.chupinadventure.hackathon.presentation;
 
 import com.chupinadventure.hackathon.domain.TrashType;
 import java.util.Set;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TrashController {
 
+    @CrossOrigin
     @GetMapping("/api/v1/trashes")
     public Set<Trash> trashes() {
 
