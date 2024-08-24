@@ -1,6 +1,7 @@
 package com.chupinadventure.hackathon.domain;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.persistence.AttributeConverter;
@@ -10,11 +11,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Converter
-public class MapToJsonConverter implements AttributeConverter<Map<String, Integer>, String> {
+public class MapToJsonConverter implements AttributeConverter<Map<TrashType, Integer>, String> {
+
+    private final TypeReference<Map<TrashType, Integer>> TYPE_REFERENCE = new TypeReference<>() {
+    };
+
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public String convertToDatabaseColumn(final Map<String, Integer> attribute) {
+    public String convertToDatabaseColumn(final Map<TrashType, Integer> attribute) {
         if (attribute == null) {
             return null;
         }
@@ -26,12 +31,12 @@ public class MapToJsonConverter implements AttributeConverter<Map<String, Intege
     }
 
     @Override
-    public Map<String, Integer> convertToEntityAttribute(final String rawData) {
+    public Map<TrashType, Integer> convertToEntityAttribute(final String rawData) {
         if (rawData == null || rawData.isEmpty()) {
             return new HashMap<>();
         }
         try {
-            return objectMapper.readValue(rawData, HashMap.class);
+            return objectMapper.readValue(rawData, TYPE_REFERENCE);
         } catch (final IOException e) {
             throw new IllegalArgumentException("Error converting JSON string to map.", e);
         }

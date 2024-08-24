@@ -1,10 +1,12 @@
 package com.chupinadventure.hackathon.service;
 
+import com.chupinadventure.hackathon.domain.Trash;
 import com.chupinadventure.hackathon.domain.TrashRepository;
 import com.chupinadventure.hackathon.domain.TrashType;
 import com.chupinadventure.hackathon.global.PointAndRadius;
 import com.chupinadventure.hackathon.presentation.Location;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,6 +45,8 @@ class TrashServiceTest {
 
         final PointAndRadius pointAndRadius = new PointAndRadius(37.878589738260535, 127.212455796659185, 1);
         final Set<Long> distanceSphere = repository.findDistanceSphere(pointAndRadius.getLongitude(), pointAndRadius.getLatitude(), pointAndRadius.getRadiusMeter());
-        distanceSphere.size();
+
+        final Set<Trash> trashes = ImmutableSet.copyOf(repository.findAllById(distanceSphere));
+        trashes.isEmpty();
     }
 }
