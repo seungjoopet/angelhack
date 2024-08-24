@@ -18,7 +18,7 @@ public class TrashController {
     private final TrashService trashService;
 
     @PostMapping("/api/v1/trashes")
-    public void registerTrash(@CookieValue(USER_ID) final String userId,
+    public void registerTrash(@CookieValue(value = USER_ID, defaultValue = "dummy") final String userId,
                               @RequestBody final TrashCreateCommand command) {
         trashService.create(userId, command);
     }
