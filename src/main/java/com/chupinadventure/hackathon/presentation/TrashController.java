@@ -1,8 +1,9 @@
 package com.chupinadventure.hackathon.presentation;
 
-import com.chupinadventure.hackathon.domain.TrashType;
+import com.chupinadventure.hackathon.service.TrashCoordinateQueryCommand;
 import com.chupinadventure.hackathon.service.TrashCreateCommand;
 import com.chupinadventure.hackathon.service.TrashService;
+import com.google.common.collect.ImmutableSet;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,11 +23,21 @@ public class TrashController {
     }
 
     @GetMapping("/api/v1/trashes")
-    public Set<Trash> trashes() {
+    public Set<TrashResponse> trashes(@RequestParam final double north,
+                                      @RequestParam final double south,
+                                      @RequestParam final double east,
+                                      @RequestParam final double west) {
 
-        final Trash trash1 = new Trash(TrashType.BOTTLE, new Location(37.5157657, 127.0990839));
-        final Trash trash2 = new Trash(TrashType.ETC, new Location(37.6157657, 127.1990839));
+        final TrashCoordinateQueryCommand command = TrashCoordinateQueryCommand.builder()
+                .north(north)
+                .south(south)
+                .west(west)
+                .east(east)
+                .build();
 
-        return Set.of(trash1, trash2);
+        return trashService.findTrashes(command)
+                .stream()
+                .map(TrashResponse::of)
+                .collect(ImmutableSet.toImmutableSet());
     }
 }
