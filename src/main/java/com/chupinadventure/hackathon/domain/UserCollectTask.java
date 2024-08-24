@@ -16,7 +16,6 @@ import java.util.Map;
 @ToString
 @EqualsAndHashCode(of = "id")
 @EntityListeners(AuditingEntityListener.class)
-
 public class UserCollectTask {
     @Id
     @Column(nullable = false)
