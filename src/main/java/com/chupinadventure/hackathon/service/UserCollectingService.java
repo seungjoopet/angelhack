@@ -55,8 +55,8 @@ public class UserCollectingService {
         final Set<UserLocation> userLocations = userLocationRepository.findAllByCollectId(collectId);
 
         return userLocations.stream()
-                .map(userLocation -> new PointAndRadius(userLocation.getLocation().getX(), userLocation.getLocation().getY(), 5))
-                .map(pointAndRadius -> trashRepository.findDistanceSphere(pointAndRadius.getLongitude(), pointAndRadius.getLatitude(), pointAndRadius.getRadiusMeter()))
+                .map(userLocation -> new PointAndRadius(userLocation.getLocation().getX(), userLocation.getLocation().getY(), 50))
+                .map(pointAndRadius -> trashRepository.findDistanceSphere(pointAndRadius.getLatitude(), pointAndRadius.getLongitude(), pointAndRadius.getRadiusMeter()))
                 .flatMap(Collection::stream)
                 .collect(ImmutableSet.toImmutableSet());
     }

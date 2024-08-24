@@ -20,7 +20,7 @@ public class MapToJsonConverter implements AttributeConverter<Map<String, Intege
         }
         try {
             return objectMapper.writeValueAsString(attribute);
-        } catch (JsonProcessingException e) {
+        } catch (final JsonProcessingException e) {
             throw new IllegalArgumentException("Error converting map to JSON string.", e);
         }
     }
