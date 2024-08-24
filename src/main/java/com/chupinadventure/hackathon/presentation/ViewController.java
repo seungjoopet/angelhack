@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class ViewController {
 
-
     @RequestMapping(value = {"/", "/collect/**", "/edit/**", "/complete"})
     public String get(final HttpServletResponse response) {
 
@@ -17,6 +16,4 @@ public class ViewController {
 
         return "index.html";
     }
-
-
 }
