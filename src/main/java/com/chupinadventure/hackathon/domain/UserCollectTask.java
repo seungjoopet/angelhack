@@ -22,6 +22,7 @@ public class UserCollectTask {
     @Column(nullable = false)
     private String userId;
 
+    @Column(nullable = false)
     private Status status;
 
 //    private Map<TrashType, Integer> summaries;
@@ -38,10 +39,6 @@ public class UserCollectTask {
 //    private void makeSummaries(final Map<TrashType, Integer> summaries) {
 //        this.summaries = summaries;
 //    }
-
-    public long getId() {
-        return id;
-    }
 
     private enum Status {
         START, END
