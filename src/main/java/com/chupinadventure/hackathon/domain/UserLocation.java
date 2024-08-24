@@ -1,6 +1,6 @@
 package com.chupinadventure.hackathon.domain;
 
-import com.chupinadventure.hackathon.service.UserLocationCreateCommand;
+import com.chupinadventure.hackathon.service.UserLocationCollectCommand;
 import com.chupinadventure.hackathon.utils.GeoUtils;
 import lombok.*;
 import org.locationtech.jts.geom.Point;
@@ -11,6 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
 @Entity
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,6 +23,9 @@ public class UserLocation {
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private long collectId;
 
     @Column(nullable = false)
     private String userId;
@@ -36,9 +40,9 @@ public class UserLocation {
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 
-    public static UserLocation of(final UserLocationCreateCommand command) {
+    public static UserLocation of(final UserLocationCollectCommand command) {
         final Point point = GeoUtils.create(command.getLongitude(), command.getLatitude());
 
-        return new UserLocation(null, command.getUserId(), point, null, null);
+        return new UserLocation(null, command.getCollectId(), command.getUserId(), point, null, null);
     }
 }
