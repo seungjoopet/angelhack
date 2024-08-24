@@ -13,6 +13,7 @@ import java.util.Map;
 @ToString
 @EqualsAndHashCode(of = "id")
 @EntityListeners(AuditingEntityListener.class)
+
 public class UserCollectTask {
     @Id
     @Column(nullable = false)
@@ -25,21 +26,22 @@ public class UserCollectTask {
     @Column(nullable = false)
     private Status status;
 
-//    @Column(name = "db_filed", columnDefinition = "json")
-//    private Map<TrashType, Integer> summaries;
+    @Column(columnDefinition = "json")
+    @Convert(converter = MapToJsonConverter.class)
+    private Map<TrashType, Integer> summaries;
 
     public static UserCollectTask of(final String userId) {
-        return new UserCollectTask(null, userId, Status.START);
+        return new UserCollectTask(null, userId, Status.START, null);
     }
 
     public void end(final Map<TrashType, Integer> summaries) {
-//        makeSummaries(summaries);
+        makeSummaries(summaries);
         status = Status.END;
     }
 
-//    private void makeSummaries(final Map<TrashType, Integer> summaries) {
-//        this.summaries = summaries;
-//    }
+    private void makeSummaries(final Map<TrashType, Integer> summaries) {
+        this.summaries = summaries;
+    }
 
     private enum Status {
         START, END
