@@ -1,13 +1,26 @@
 package com.chupinadventure.hackathon.presentation;
 
 import com.chupinadventure.hackathon.domain.TrashType;
-import java.util.Set;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.chupinadventure.hackathon.service.TrashCreateCommand;
+import com.chupinadventure.hackathon.service.TrashService;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
+import static com.chupinadventure.hackathon.constant.CookieName.USER_ID;
+
+@AllArgsConstructor
 @RestController
 public class TrashController {
+
+    private final TrashService trashService;
+
+    @PostMapping("/api/v1/trashes")
+    public void registerTrash(@CookieValue(USER_ID) final String userId,
+                              @RequestBody final TrashCreateCommand command) {
+        trashService.create(userId, command);
+    }
 
     @CrossOrigin
     @GetMapping("/api/v1/trashes")
