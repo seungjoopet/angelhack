@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @ToString
 @EqualsAndHashCode(of = "id")
 @EntityListeners(AuditingEntityListener.class)
-@Where(clause = "is_delete = false")
+@Where(clause = "is_deleted = false")
 public class Trash {
 
     @Id
