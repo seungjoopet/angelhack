@@ -16,6 +16,7 @@ import java.util.Set;
 @Service
 public class UserCollectingService {
 
+    private final CollectionProperties collectionProperties;
     private final UserLocationRepository userLocationRepository;
     private final UserCollectTaskRepository userCollectTaskRepository;
     private final TrashRepository trashRepository;
@@ -55,7 +56,7 @@ public class UserCollectingService {
         final Set<UserLocation> userLocations = userLocationRepository.findAllByCollectId(collectId);
 
         return userLocations.stream()
-                .map(userLocation -> new PointAndRadius(userLocation.getLocation().getY(), userLocation.getLocation().getX(), 50))
+                .map(userLocation -> new PointAndRadius(userLocation.getLocation().getY(), userLocation.getLocation().getX(), collectionProperties.getRadiusMeter()))
                 .map(pointAndRadius -> trashRepository.findDistanceSphere(pointAndRadius.getLongitude(), pointAndRadius.getLatitude(), pointAndRadius.getRadiusMeter()))
                 .flatMap(Collection::stream)
                 .collect(ImmutableSet.toImmutableSet());
