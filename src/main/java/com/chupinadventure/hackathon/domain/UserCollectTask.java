@@ -1,9 +1,12 @@
 package com.chupinadventure.hackathon.domain;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Getter
@@ -31,8 +34,15 @@ public class UserCollectTask {
     @Convert(converter = MapToJsonConverter.class)
     private Map<TrashType, Integer> summaries;
 
+    @CreatedDate
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime modifiedAt;
+
     public static UserCollectTask of(final String userId) {
-        return new UserCollectTask(null, userId, Status.START, null);
+        return new UserCollectTask(null, userId, Status.START, null, null, null);
     }
 
     public void end(final Map<TrashType, Integer> summaries) {

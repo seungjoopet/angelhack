@@ -44,7 +44,7 @@ public class UserCollectingService {
 
         final Map<TrashType, Integer> map = new HashMap<>();
         trashes.forEach(trash -> {
-            map.put(trash.getType(), map.getOrDefault(trash.getType(), 0));
+            map.put(trash.getType(), map.getOrDefault(trash.getType(), 0) + 1);
             trash.delete();
         });
 
@@ -56,7 +56,7 @@ public class UserCollectingService {
 
         return userLocations.stream()
                 .map(userLocation -> new PointAndRadius(userLocation.getLocation().getX(), userLocation.getLocation().getY(), 50))
-                .map(pointAndRadius -> trashRepository.findDistanceSphere(pointAndRadius.getLatitude(), pointAndRadius.getLongitude(), pointAndRadius.getRadiusMeter()))
+                .map(pointAndRadius -> trashRepository.findDistanceSphere(pointAndRadius.getLongitude(), pointAndRadius.getLatitude(), pointAndRadius.getRadiusMeter()))
                 .flatMap(Collection::stream)
                 .collect(ImmutableSet.toImmutableSet());
     }
