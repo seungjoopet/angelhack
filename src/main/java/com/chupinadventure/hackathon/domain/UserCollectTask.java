@@ -23,6 +23,7 @@ public class UserCollectTask {
     @Column(nullable = false)
     private String userId;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;
 
@@ -46,6 +47,4 @@ public class UserCollectTask {
     private enum Status {
         START, END
     }
-
-
 }
