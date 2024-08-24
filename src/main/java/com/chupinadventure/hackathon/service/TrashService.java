@@ -25,8 +25,8 @@ public class TrashService {
 
     @Transactional(readOnly = true)
     public Set<Trash> findTrashes(final TrashCoordinateQueryCommand command) {
-        final PointAndRadius pointAndRadius = GeoUtils.calculate(command.getNorth(), command.getSouth(),
-                command.getEast(), command.getWest());
+        final PointAndRadius pointAndRadius = GeoUtils.calculate(command.getEast(), command.getWest(),
+                command.getNorth(), command.getSouth());
 
         final Set<Long> ids = repository.findDistanceSphere(pointAndRadius.getLongitude(),
                 pointAndRadius.getLatitude(), pointAndRadius.getRadiusMeter());
