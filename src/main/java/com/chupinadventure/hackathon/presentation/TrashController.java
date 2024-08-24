@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableSet;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @CrossOrigin
@@ -18,8 +19,8 @@ public class TrashController {
 
     @PostMapping("/api/v1/trashes")
     public void registerTrash(@RequestParam final String userId,
-                              @RequestBody final TrashCreateCommand command) {
-        trashService.create(userId, command);
+                              @RequestBody final List<TrashCreateCommand> commands) {
+        trashService.create(userId, commands);
     }
 
     @GetMapping("/api/v1/trashes")

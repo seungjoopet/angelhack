@@ -4,11 +4,13 @@ import com.chupinadventure.hackathon.domain.Trash;
 import com.chupinadventure.hackathon.domain.TrashRepository;
 import com.chupinadventure.hackathon.global.PointAndRadius;
 import com.chupinadventure.hackathon.utils.GeoUtils;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -18,9 +20,10 @@ public class TrashService {
     private final TrashRepository repository;
 
     @Transactional
-    public void create(final String userId, final TrashCreateCommand command) {
-        final Trash trash = Trash.of(userId, command);
-        repository.save(trash);
+    public void create(final String userId, final List<TrashCreateCommand> commands) {
+        repository.saveAll(commands.stream()
+                .map(command -> Trash.of(userId, command))
+                .collect(ImmutableList.toImmutableList()));
     }
 
     @Transactional(readOnly = true)
