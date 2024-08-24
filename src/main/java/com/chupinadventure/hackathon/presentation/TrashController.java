@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
-import static com.chupinadventure.hackathon.constant.CookieName.USER_ID;
-
 @CrossOrigin
 @AllArgsConstructor
 @RestController
@@ -18,7 +16,7 @@ public class TrashController {
     private final TrashService trashService;
 
     @PostMapping("/api/v1/trashes")
-    public void registerTrash(@CookieValue(value = USER_ID, defaultValue = "dummy") final String userId,
+    public void registerTrash(@RequestParam final String userId,
                               @RequestBody final TrashCreateCommand command) {
         trashService.create(userId, command);
     }
