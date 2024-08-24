@@ -15,11 +15,11 @@ public final class UserCollectSummary {
 
     @Getter
     static final class CollectedTrashCount {
-        private final TrashType trashType;
+        private final TrashType type;
         private final int count;
 
-        public CollectedTrashCount(final TrashType trashType, final int count) {
-            this.trashType = trashType;
+        public CollectedTrashCount(final TrashType type, final int count) {
+            this.type = type;
             this.count = count;
         }
     }
