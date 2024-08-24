@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Repository
 public interface TrashRepository extends CrudRepository<Trash, Long> {
-    @Query(value = "SELECT id FROM trash WHERE ST_Distance_Sphere(location, ST_SRID(POINT(:longitude, :latitude), 4326)) < :radiusMeter AND is_deleted = false",
+    @Query(value = "SELECT id FROM trash WHERE ST_Distance_Sphere(location, ST_SRID(POINT(:latitude, :longitude), 4326)) < :radiusMeter AND is_deleted = false",
             nativeQuery = true)
     Set<Long> findDistanceSphere(@Param("longitude") final double longitude, @Param("latitude") final double latitude, @Param("radiusMeter") final double radiusMeter);
 }
