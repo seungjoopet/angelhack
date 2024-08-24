@@ -10,6 +10,7 @@ import java.util.Set;
 
 import static com.chupinadventure.hackathon.constant.CookieName.USER_ID;
 
+@CrossOrigin
 @AllArgsConstructor
 @RestController
 public class TrashController {
@@ -22,7 +23,6 @@ public class TrashController {
         trashService.create(userId, command);
     }
 
-    @CrossOrigin
     @GetMapping("/api/v1/trashes")
     public Set<Trash> trashes() {
 
